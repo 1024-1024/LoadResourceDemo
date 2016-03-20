@@ -10,8 +10,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import org.xmlpull.v1.XmlPullParser;
 
 public class MainActivity extends Activity {
 
@@ -23,6 +28,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         ImageView imageView = (ImageView) findViewById(R.id.icon);
         TextView textView = (TextView) findViewById(R.id.text);
+        ViewGroup contentWrapper = (ViewGroup) findViewById(R.id.plugin_content);
 
         /**
          *  插件apk路径
@@ -45,7 +51,13 @@ public class MainActivity extends Activity {
 
         imageView.setImageDrawable(drawable);
         textView.setText(text);
-
+        /**
+         * 获取布局资源
+         */
+        XmlPullParser xmlResourceParser = resources.getLayout(resources.getIdentifier("layout_be_load", "layout",
+                "laodresource.demo.com.apkbeloaded"));
+        View viewFromPlugin = LayoutInflater.from(this).inflate(xmlResourceParser,null);
+        contentWrapper.addView(viewFromPlugin);
 
     }
 
